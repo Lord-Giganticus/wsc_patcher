@@ -10,6 +10,8 @@ ZIP = Path(f"wsc_patcher_{SYSTEM}.zip").absolute()
 
 subprocess.run("cargo build --release", shell=True)
 
+subprocess.run("ls")
+
 with ZipFile(ZIP, "w", ZIP_LZMA) as w:
     os.chdir("target\\release")
     if SYSTEM != "Windows":
