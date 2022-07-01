@@ -12,9 +12,8 @@ subprocess.run("cargo build --release", shell=True)
 
 with ZipFile(ZIP, "w", ZIP_LZMA) as w:
     os.chdir("target")
-    subprocess.run("ls")
     os.chdir("release")
-    if SYSTEM != "Windows":
+    if SYSTEM != "windows":
         w.write("wsc_patcher", "wsc_patcher")
     else:
         w.write("wsc_patcher.exe", "wsc_patcher.exe")

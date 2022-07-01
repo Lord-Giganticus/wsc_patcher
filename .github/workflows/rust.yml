@@ -24,10 +24,10 @@ jobs:
     - name: Build
       run: python build.py
     - uses: actions/upload-artifact@v2.3.1
+      if: ${{ matrix.os }} == 'windows-latest'
       with:
         name: ${{ matrix.os }}
-        path: | 
-          "*.zip"
+        path: wsc_patcher_windows.zip
 
   publish:
     if: github.ref == 'refs/heads/main'
