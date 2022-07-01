@@ -24,15 +24,20 @@ jobs:
     - name: Build
       run: python build.py
     - uses: actions/upload-artifact@v2.3.1
-      if: matrix.os  == 'windows-latest'
+      if: matrix.os == 'windows-latest'
       with:
         name: ${{ matrix.os }}
         path: wsc_patcher_windows.zip
     - uses: actions/upload-artifact@v2.3.1
-      if: matrix.os  == 'ubuntu-latest'
+      if: matrix.os == 'ubuntu-latest'
       with:
         name: ${{ matrix.os }}
         path: wsc_patcher_linux.zip
+    - uses: actions/upload-artifact@v2.3.1
+      if: matrix.os == 'macos-latest'
+      with:
+        name: ${{ matrix.os }}
+        path: wsc_patcher_darwin.zip
 
   publish:
     if: github.ref == 'refs/heads/main'
