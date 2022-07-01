@@ -10,10 +10,10 @@ ZIP = Path(f"wsc_patcher_{SYSTEM}.zip").absolute()
 
 subprocess.run("cargo build --release", shell=True)
 
-subprocess.run("ls")
-
 with ZipFile(ZIP, "w", ZIP_LZMA) as w:
-    os.chdir("target\\release")
+    os.chdir("target")
+    subprocess.run("ls")
+    os.chdir("release")
     if SYSTEM != "Windows":
         w.write("wsc_patcher", "wsc_patcher")
     else:
