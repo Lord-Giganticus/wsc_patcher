@@ -1,0 +1,55 @@
+name: Rust
+
+on:
+  push:
+    branches: [ "main" ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+
+    strategy:
+      matrix:
+        os:
+          - windows-latest
+          - macos-latest
+          - ubuntu-latest
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v3
+    - name: Build
+      run: python build.py
+    - uses: actions/upload-artifact@v2.3.1
+      with:
+        name: ${{ matrix.os }}
+        path: | 
+          "*.zip"
+
+  publish:
+    if: github.ref == 'refs/heads/main'
+    needs: build
+
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: windows-latest
+      - uses: actions/download-artifact@v3
+        with:
+          name: macos-latest
+      - uses: actions/download-artifact@v3
+        with:
+          name: ubuntu-latest
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "Auto"
+          prerelease: true
+          title: "Auto Build"
+          files: |
+            *.zip
