@@ -8,6 +8,8 @@ SYSTEM = platform.system().lower()
 
 ZIP = Path(f"wsc_patcher_{SYSTEM}.zip").absolute()
 
+print(ZIP.name)
+
 subprocess.run("cargo build --release", shell=True)
 
 with ZipFile(ZIP, "w", ZIP_LZMA) as w:

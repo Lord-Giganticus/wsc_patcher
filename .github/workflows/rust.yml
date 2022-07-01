@@ -28,6 +28,11 @@ jobs:
       with:
         name: ${{ matrix.os }}
         path: wsc_patcher_windows.zip
+    - uses: actions/upload-artifact@v2.3.1
+      if: matrix.os  == 'ubuntu-latest'
+      with:
+        name: ${{ matrix.os }}
+        path: wsc_patcher_linux.zip
 
   publish:
     if: github.ref == 'refs/heads/main'
